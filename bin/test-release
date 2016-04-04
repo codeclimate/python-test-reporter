@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Test release a new version of this repository.
+#
+# Usage: bin/test-release
+#
+###
+
+python setup.py build
+python setup.py register -r pypitest
+python setup.py sdist upload -r pypitest
