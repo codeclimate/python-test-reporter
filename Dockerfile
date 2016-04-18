@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 
 RUN apk --update add git
 
-COPY requirements.txt /usr/src/app/
+COPY dev_requirements.txt /usr/src/app/
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r dev_requirements.txt
 
 COPY . /usr/src/app
 
