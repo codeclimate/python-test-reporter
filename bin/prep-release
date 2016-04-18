@@ -23,7 +23,7 @@ fi
 
 printf "RELEASE %s => %s\n" "$old_version" "$version"
 git checkout master
-git pull
+git pull origin master
 
 git checkout -b "$branch"
 
