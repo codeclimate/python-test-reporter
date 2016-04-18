@@ -4,18 +4,6 @@ IMAGE_NAME ?= codeclimate/python-test-reporter
 
 all: image
 
-citest:
-	docker run \
-	  --rm \
-	  --env COVERAGE_FILE=/tmp/coverage.txt \
-	  --env CIRCLECI \
-	  --env CIRCLE_BRANCH \
-	  --env CIRCLE_SHA1 \
-	  --env CODECLIMATE_REPO_TOKEN \
-	  --entrypoint=/bin/sh \
-	  --volume /tmp:/tmp \
-	  $(IMAGE_NAME) -c 'python setup.py test'
-
 image:
 	docker build --tag $(IMAGE_NAME) .
 

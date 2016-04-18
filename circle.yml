@@ -1,13 +1,13 @@
 machine:
-  services:
-    - docker
+  python:
+    version: 3.5.1
 
 dependencies:
   override:
+    - pip install -r dev_requirements.txt
     - pip install codeclimate-test-reporter
-    - make image
 
 test:
   override:
-    - make citest
-    - codeclimate-test-reporter --file /tmp/coverage.txt
+    - python setup.py test
+    - codeclimate-test-reporter
