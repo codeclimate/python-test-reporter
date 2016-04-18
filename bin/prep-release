@@ -16,7 +16,7 @@ version=$1
 old_version=$(< reporter/VERSION)
 branch="release-$version"
 
-if ! python setup.py test then
+if ! make test; then
   echo "test failure, not releasing" >&2
   exit 1
 fi
