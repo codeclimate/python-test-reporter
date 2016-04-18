@@ -8,7 +8,7 @@
 	<packages>
 		<package branch-rate="0" complexity="0" line-rate="0.9" name=".">
 			<classes>
-                          <class branch-rate="0" complexity="0" filename="/usr/src/app/reporter/tests/fixtures/source.py" line-rate="0.9" name="source.py">
+                          <class branch-rate="0" complexity="0" filename="reporter/tests/fixtures/source.py" line-rate="0.9" name="source.py">
 					<methods/>
 					<lines>
 						<line hits="1" number="4"/>
