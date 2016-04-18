@@ -1,0 +1,30 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+    exclude_paths:
+    # duplicate structures in dictionary
+    - reporter/components/ci.py
+  fixme:
+    enabled: true
+  pep8:
+    enabled: true
+  radon:
+    enabled: true
+    exclude_fingerprints:
+    # complexity in PayloadValidator#validate
+    - f57544b97810662ecf17d3c4be4974bc
+    # complexity in Runner#run
+    - f8db204cc016d9d612e462dc9ff6fcfb
+ratings:
+  paths:
+  - "**.inc"
+  - "**.module"
+  - "**.py"
+exclude_paths:
+- dist/
+- reporter/tests/
+- build/

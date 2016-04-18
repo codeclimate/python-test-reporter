@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Release a new version of this repository.
+#
+# Assumes bin/prep-release was run and the PR merged.
+#
+# Usage: bin/release
+#
+###
+
+python setup.py build
+python setup.py register -r pyp
+python setup.py sdist upload -r pypi
+
+git tag v$(cat reporter/VERSION)
+git push origin --tags

@@ -1,0 +1,15 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - make image
+
+test:
+  override:
+    - make citest
+
+notify:
+  webhooks:
+    - url: https://cc-slack-proxy.herokuapp.com/circle
