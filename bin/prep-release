@@ -43,4 +43,4 @@ else
   echo "hub not installed? Please open the PR manually" >&2
 fi
 
-echo "After merging the version-bump PR, run bin/release"
+echo "After merging the version-bump PR, run: make release"

@@ -4,12 +4,10 @@ machine:
 
 dependencies:
   override:
+    - pip install codeclimate-test-reporter
     - make image
 
 test:
   override:
     - make citest
-
-notify:
-  webhooks:
-    - url: https://cc-slack-proxy.herokuapp.com/circle
+    - codeclimate-test-reporter --file /tmp/coverage.txt

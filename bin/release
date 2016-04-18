@@ -7,10 +7,8 @@
 # Usage: bin/release
 #
 ###
+set -e
 
 python setup.py build
-python setup.py register -r pyp
+python setup.py register -r pypi
 python setup.py sdist upload -r pypi
-
-git tag v$(cat reporter/VERSION)
-git push origin --tags

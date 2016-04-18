@@ -38,4 +38,5 @@ setup(
         ],
     },
     package_data={"reporter": ["VERSION"]},
+    install_requires=["coverage>=4.0", "requests"],
 )
