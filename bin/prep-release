@@ -13,7 +13,7 @@ if [ -z "$1" ]; then
 fi
 
 version=$1
-old_version=$(< VERSION)
+old_version=$(< reporter/VERSION)
 branch="release-$version"
 
 if ! python setup.py test then
@@ -27,8 +27,8 @@ git pull
 
 git checkout -b "$branch"
 
-printf "%s\n" "$version" > VERSION
-git add VERSION
+printf "%s\n" "$version" > reporter/VERSION
+git add reporter/VERSION
 git commit -m "Release v$version"
 git push origin "$branch"
 
