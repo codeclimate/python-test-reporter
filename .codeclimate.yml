@@ -10,6 +10,8 @@ engines:
     - reporter/components/ci.py
   fixme:
     enabled: true
+  markdownlint:
+    enabled: true
   pep8:
     enabled: true
   radon:
