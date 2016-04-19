@@ -28,6 +28,8 @@ setup(
     url="http://github.com/codeclimate/python-test-reporter",
     author="Code Climate",
     author_email="hello@codeclimate.com",
+    maintainer="Code Climate",
+    maintainer_email="hello@codeclimate.com",
     license="MIT",
     packages=find_packages(exclude=["tests"]),
     zip_safe=False,
