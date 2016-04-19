@@ -5,7 +5,7 @@ import requests
 
 class ApiClient:
     def __init__(self, host=None, timeout=5):
-        self.host = host or self.__default_host()
+        self.host = host or self.__default_host().rstrip("/")
         self.timeout = timeout
 
     def post(self, payload):
@@ -22,4 +22,4 @@ class ApiClient:
         return response
 
     def __default_host(self):
-        return os.environ.get("CODECLIMATE_HOST", "https://codeclimate.com")
+        return os.environ.get("CODECLIMATE_API_HOST", "https://codeclimate.com")
