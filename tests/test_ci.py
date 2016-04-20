@@ -1,6 +1,6 @@
 import pytest
 
-from ..components.ci import CI
+from codeclimate_test_reporter.components.ci import CI
 
 
 def test_travis_data():

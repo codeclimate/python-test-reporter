@@ -14,4 +14,4 @@ RUN adduser -u 9000 -D app
 RUN chown -R app:app /usr/src/app
 USER app
 
-ENTRYPOINT ["codeclimate-test-reporter"]
+ENTRYPOINT ["/usr/local/bin/python", "-m", "codeclimate_test_reporter"]
