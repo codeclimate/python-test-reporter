@@ -17,7 +17,7 @@ import requests.exceptions
 from ..__init__ import __version__ as reporter_version
 from ..components.argument_parser import ArgumentParser
 from ..components.payload_validator import InvalidPayload
-from ..components.reporter import Reporter
+from ..components.reporter import CoverageFileNotFound, Reporter
 
 
 class Runner:
@@ -45,11 +45,12 @@ class Runner:
                 reporter = Reporter(parsed_args)
                 exit_status = reporter.run()
                 return exit_status
-        except CoverageException as e:
+        except CoverageFileNotFound as e:
             return self.__handle_error(
-                "Coverage file `" + parsed_args.file + "` file not found. "
-                "Use --file <file> to specifiy an alternate location."
+                str(e) + "\nUse --file <file> to specifiy an alternate location."
             )
+        except CoverageException as e:
+            return self.__handle_error(str(e), support=True)
         except InvalidPayload as e:
             return self.__handle_error("Invalid Payload: " + str(e), support=True)
         except requests.exceptions.HTTPError as e:

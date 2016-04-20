@@ -8,6 +8,10 @@ from ..components.formatter import Formatter
 from ..components.payload_validator import PayloadValidator
 
 
+class CoverageFileNotFound(Exception):
+    pass
+
+
 class Reporter:
     def __init__(self, args):
         self.args = args
@@ -20,6 +24,10 @@ class Reporter:
         :return: status code
 
         """
+
+        if not os.path.isfile(self.args.file):
+            message = "Coverage file `" + self.args.file + "` file not found. "
+            raise CoverageFileNotFound(message)
 
         xml_filepath = self.__create_xml_report(self.args.file)
         formatter = Formatter(xml_filepath)
