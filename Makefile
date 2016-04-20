@@ -17,7 +17,7 @@ test: image
 	  -it \
 	  --rm \
 	  --entrypoint=/bin/sh \
-	  $(IMAGE_NAME) -c 'python setup.py test'
+	  $(IMAGE_NAME) -c 'python setup.py testcov'
 
 test-release: image
 	docker run \
