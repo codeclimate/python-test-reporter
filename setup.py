@@ -5,8 +5,7 @@ from codeclimate_test_reporter.__init__ import __version__ as reporter_version
 
 
 class RunTests(Command):
-    """Run all tests."""
-    description = 'run tests'
+    description = "Run tests"
     user_options = []
 
     def initialize_options(self):
@@ -16,7 +15,15 @@ class RunTests(Command):
         pass
 
     def run(self):
-        """Run all tests!"""
+        errno = call(["py.test", "tests/"])
+        raise SystemExit(errno)
+
+
+class RunTestsCov(RunTests):
+    description = "Run tests w/ coverage"
+
+    def run(self):
+        """Run all tests with coverage!"""
         errno = call(["py.test", "--cov=codeclimate_test_reporter", "tests/"])
         raise SystemExit(errno)
 
@@ -33,7 +40,7 @@ setup(
     license="MIT",
     packages=find_packages(exclude=["tests"]),
     zip_safe=False,
-    cmdclass={"test": RunTests},
+    cmdclass={"test": RunTests, "testcov": RunTestsCov},
     entry_points={
         "console_scripts": [
             "codeclimate-test-reporter=codeclimate_test_reporter.__main__:run",
