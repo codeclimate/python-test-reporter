@@ -12,7 +12,7 @@ class CI:
         return service["matcher"](self.env)
 
     def data(self):
-        service = next(filter(self.predicate, self.__services()), None)
+        service = next(iter(filter(self.predicate, self.__services())), None)
 
         if service:
             return service["data"](self.env)
