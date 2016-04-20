@@ -7,7 +7,7 @@ engines:
       - python
     exclude_paths:
     # duplicate structures in dictionary
-    - reporter/components/ci.py
+    - codeclimate_test_reporter/components/ci.py
   fixme:
     enabled: true
   markdownlint:
@@ -18,9 +18,9 @@ engines:
     enabled: true
     exclude_fingerprints:
     # complexity in PayloadValidator#validate
-    - f57544b97810662ecf17d3c4be4974bc
+    - 1b18d0fde7d0511be196bcc366180bf8
     # complexity in Runner#run
-    - f8db204cc016d9d612e462dc9ff6fcfb
+    - c1a982077efa39ca50db944490e15485
 ratings:
   paths:
   - "**.inc"
@@ -28,5 +28,5 @@ ratings:
   - "**.py"
 exclude_paths:
 - dist/
-- reporter/tests/
+- tests/
 - build/

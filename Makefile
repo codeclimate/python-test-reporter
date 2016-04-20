@@ -1,14 +1,16 @@
-.PHONY: all citest image run test release test-release
+.PHONY: all clean-pyc image test test-release release run
 
 IMAGE_NAME ?= codeclimate/python-test-reporter
 
 all: image
 
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+
 image:
 	docker build --tag $(IMAGE_NAME) .
-
-run: image
-	docker run --rm $(IMAGE_NAME)
 
 test: image
 	docker run \
@@ -17,6 +19,13 @@ test: image
 	  --entrypoint=/bin/sh \
 	  $(IMAGE_NAME) -c 'python setup.py test'
 
+test-release: image
+	docker run \
+	  --rm \
+	  --volume ~/.pypirc:/home/app/.pypirc \
+	  --entrypoint=/bin/sh \
+	  $(IMAGE_NAME) -c 'bin/test-release'
+
 release: image
 	docker run \
 	  --rm \
@@ -24,9 +33,5 @@ release: image
 	  --entrypoint=/bin/sh \
 	  $(IMAGE_NAME) -c 'bin/release' && bin/post-release
 
-test-release: image
-	docker run \
-	  --rm \
-	  --volume ~/.pypirc:/home/app/.pypirc \
-	  --entrypoint=/bin/sh \
-	  $(IMAGE_NAME) -c 'bin/test-release'
+run: image
+	docker run --rm $(IMAGE_NAME) --debug

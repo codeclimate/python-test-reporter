@@ -1,8 +1,8 @@
 import pytest
 import subprocess
 
-from ..components.formatter import Formatter
-from ..components.payload_validator import PayloadValidator
+from codeclimate_test_reporter.components.formatter import Formatter
+from codeclimate_test_reporter.components.payload_validator import PayloadValidator
 
 
 def test_formatter():
@@ -12,7 +12,7 @@ def test_formatter():
     subprocess.call(["git", "add", "."])
     subprocess.call(["git", "commit", "-m", "init"])
 
-    formatter = Formatter("./reporter/tests/fixtures/coverage.xml")
+    formatter = Formatter("./tests/fixtures/coverage.xml")
     payload = formatter.payload()
 
     assert type(payload) is dict

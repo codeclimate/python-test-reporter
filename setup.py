@@ -1,7 +1,7 @@
 from setuptools import Command, find_packages, setup
 from subprocess import call
 
-from reporter.__init__ import __version__ as reporter_version
+from codeclimate_test_reporter.__init__ import __version__ as reporter_version
 
 
 class RunTests(Command):
@@ -17,7 +17,7 @@ class RunTests(Command):
 
     def run(self):
         """Run all tests!"""
-        errno = call(["py.test", "--cov=reporter", "reporter/tests/"])
+        errno = call(["py.test", "--cov=codeclimate_test_reporter", "tests/"])
         raise SystemExit(errno)
 
 
@@ -36,9 +36,9 @@ setup(
     cmdclass={"test": RunTests},
     entry_points={
         "console_scripts": [
-            "codeclimate-test-reporter=reporter.__main__:run",
+            "codeclimate-test-reporter=codeclimate_test_reporter.__main__:run",
         ],
     },
-    package_data={"reporter": ["VERSION"]},
+    package_data={"codeclimate_test_reporter": ["VERSION"]},
     install_requires=["coverage>=4.0", "requests"],
 )
