@@ -143,6 +143,18 @@ Darwin 15.4.0
 
 Patches, bug fixes, feature requests, and pull requests are welcome.
 
+## Development
+
+A `Dockerfile` is included for developer convenience. Simply run `make test` to
+run the test suite and coverage report.
+
+To release a new version, first run `./bin/prep-release [version]` to bump the
+version and open a PR on GitHub.
+
+Once the PR is merged, run `make release` to publish the new version to pypy and
+create a tag on GitHub. This step requires pypy credentials at `~/.pypirc`. You
+can copy this repo's `.pypirc.sample` file as a starting point.
+
 ## Copyright
 
 See [LICENSE.txt][license]
