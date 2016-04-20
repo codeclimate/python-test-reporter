@@ -1,4 +1,6 @@
+import os
 import pytest
+import shutil
 import subprocess
 
 from codeclimate_test_reporter.components.formatter import Formatter
@@ -6,14 +8,20 @@ from codeclimate_test_reporter.components.payload_validator import PayloadValida
 
 
 def test_formatter():
-    subprocess.call(["git", "config", "--global", "user.email", "you@example.com"])
-    subprocess.call(["git", "config", "--global", "user.name", "Your Name"])
-    subprocess.call(["git", "init"])
-    subprocess.call(["git", "add", "."])
-    subprocess.call(["git", "commit", "-m", "init"])
+    orig_dir = os.getcwd()
+    os.chdir("./tests/fixtures")
 
-    formatter = Formatter("./tests/fixtures/coverage.xml")
-    payload = formatter.payload()
+    subprocess.call(["git", "init"])
+    subprocess.call(["git", "config", "user.name", "Test User"])
+    subprocess.call(["git", "config", "user.email", "test@example.com"])
+    subprocess.call(["git", "commit", "--allow-empty", "--message", "init"])
+
+    try:
+        formatter = Formatter("coverage.xml")
+        payload = formatter.payload()
+    finally:
+        os.chdir(orig_dir)
+        shutil.rmtree("./tests/fixtures/.git")
 
     assert type(payload) is dict
     assert len(payload["source_files"]) == 1
