@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import coverage as Coverage
 import json
 import os
@@ -42,9 +44,12 @@ class Reporter:
         else:
             client = ApiClient()
 
-            print("Submitting payload to %s" % client.host)
+            print("Submitting payload to %s... " % client.host, end="")
+            sys.stdout.flush()
 
             response = self.__post_payload(client, payload)
+
+            print("done!")
 
             return response
 
