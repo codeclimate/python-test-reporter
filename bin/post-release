@@ -5,5 +5,5 @@
 ###
 set -e
 
-git tag -f v$(cat reporter/VERSION)
+git tag -f v$(cat codeclimate_test_reporter/VERSION)
 git push origin --tags

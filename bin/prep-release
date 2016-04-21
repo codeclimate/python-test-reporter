@@ -13,7 +13,7 @@ if [ -z "$1" ]; then
 fi
 
 version=$1
-old_version=$(< reporter/VERSION)
+old_version=$(< codeclimate_test_reporter/VERSION)
 branch="release-$version"
 
 if ! make test; then
@@ -27,8 +27,8 @@ git pull origin master
 
 git checkout -b "$branch"
 
-printf "%s\n" "$version" > reporter/VERSION
-git add reporter/VERSION
+printf "%s\n" "$version" > codeclimate_test_reporter/VERSION
+git add codeclimate_test_reporter/VERSION
 git commit -m "Release v$version"
 git push origin "$branch"
 
