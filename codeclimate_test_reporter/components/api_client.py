@@ -9,8 +9,6 @@ class ApiClient:
         self.timeout = timeout
 
     def post(self, payload):
-        print("Submitting payload to %s" % self.host)
-
         headers = {"Content-Type": "application/json"}
         response = requests.post(
             "%s/test_reports" % self.host,

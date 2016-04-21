@@ -40,10 +40,15 @@ class Reporter:
 
             return 0
         else:
-            return self.__post_payload(payload)
+            client = ApiClient()
 
-    def __post_payload(self, payload):
-        client = ApiClient()
+            print("Submitting payload to %s" % client.host)
+
+            response = self.__post_payload(client, payload)
+
+            return response
+
+    def __post_payload(self, client, payload):
         payload["repo_token"] = self.args.token or os.environ.get("CODECLIMATE_REPO_TOKEN")
 
         if payload["repo_token"]:
