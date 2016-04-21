@@ -21,7 +21,12 @@ from ..components.reporter import CoverageFileNotFound, Reporter
 
 
 class Runner:
-    def run(self, args=sys.argv[1:], env=os.environ):
+    def __init__(self, args=sys.argv[1:], out=sys.stdout, err=sys.stderr):
+        self.parsed_args = ArgumentParser().parse_args(args)
+        self.out = out
+        self.err = err
+
+    def run(self):
         """
         The main function.
 
@@ -33,16 +38,14 @@ class Runner:
         """
 
         try:
-            parsed_args = ArgumentParser().parse_args(args)
-
-            if parsed_args.debug:
-                sys.stderr.write(self.__debug_info())
+            if self.parsed_args.debug:
+                self.out.write(self.__debug_info())
                 return 0
-            elif parsed_args.version:
-                print(reporter_version)
+            elif self.parsed_args.version:
+                self.out.write(reporter_version)
                 return 0
             else:
-                reporter = Reporter(parsed_args)
+                reporter = Reporter(self.parsed_args)
                 exit_status = reporter.run()
                 return exit_status
         except CoverageFileNotFound as e:
@@ -62,10 +65,10 @@ class Runner:
             )
 
     def __handle_error(self, message, support=False):
-        sys.stderr.write(message)
+        self.err.write(message)
 
         if support:
-            sys.stderr.write(
+            self.err.write(
                 "\n\nContact support at https://codeclimate.com/help "
                 "with the following debug info if error persists:"
                 "\n" + message + "\n" + self.__debug_info()
