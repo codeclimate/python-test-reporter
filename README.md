@@ -11,64 +11,38 @@
 [pypy-badge]: https://badge.fury.io/py/codeclimate-test-reporter.svg
 [pypy]: https://pypi.python.org/pypi/codeclimate-test-reporter
 
-
 Collects test coverage data from your Python test suite and sends it to Code
 Climate's hosted, automated code review service.
 
-Code Climate - [https://codeclimate.com](https://codeclimate.com)
+Code Climate - [https://codeclimate.com][codeclimate.com]
 
-## Usage
+## Uploading Your Test Coverage Report
 
 The `codeclimate-test-reporter` is compatible with [coverage.py][] coverage
 reports. By default, coverage.py will generate a `.coverage` file in the current
 directory. `codeclimate-test-reporter`, run without arguments, will
 look for a coverage report at this default location.
 
-```console
-$ codeclimate-test-reporter
-Submitting payload to https://codeclimate.com
-```
-
-### Alternate .coverage file location
-
-If you configure coverage.py to generate a coverage report at an alternate
-location, pass that to the `codeclimate-test-reporter`:
-
-```console
-$ codeclimate-test-reporter --file ./alternate/location/.coverage
-Submitting payload to https://codeclimate.com
-```
-
 [coverage.py]: https://coverage.readthedocs.org/
 
-### CI Setup
+Note: The `codeclimate-test-reporter` requires a repo token from
+[codeclimate.com][], so if you don't have one, the first step is to [signup][]
+and configure your repo.  Then:
 
-When adding the `codeclimate-test-reporter` to your CI environment, you should
-execute the reporter after your test suite and coverage run:
-
-```yaml
-test:
-  - python setup.py test
-  - codeclimate-test-reporter
-```
-
-### Configuration
-
-The `codeclimate-test-reporter` requires a repo token from [codeclimate.com][],
-so if you don't have one, the first step is to signup and configure your repo.
-Then:
+[codeclimate.com]: https://codeclimate.com
+[signup]: https://codeclimate.com/signup
 
 You can place the repo token in the environment under the key
 `CODECLIMATE_REPO_TOKEN` or pass the token as a CLI argument:
 
 ```console
 $ CODECLIMATE_REPO_TOKEN=[token] codeclimate-test-reporter
-Submitting payload to https://codeclimate.com
+Submitting payload to https://codeclimate.com... done!
 ```
 
 ```console
 $ codeclimate-test-reporter --token [token]
-Submitting payload to https://codeclimate.com
+Submitting payload to https://codeclimate.com... done!
 ```
 
 We recommend configuring the repo token in the environment through your CI
@@ -76,7 +50,48 @@ settings which will hide the value during runs. The token should be considered a
 scoped password. Anyone with the token can submit test coverage data to your
 Code Climate repo.
 
-[codeclimate.com]: https://codeclimate.com
+```console
+# CODECLIMATE_REPO_TOKEN already set in env
+$ codeclimate-test-reporter
+Submitting payload to https://codeclimate.com... done!
+```
+
+### Generating Coverage Reports
+
+To generate a coverage report with [pytest][], you can use the [pytest-cov][]
+plugin:
+
+```console
+$ py.test --cov=codeclimate_test_reporter tests/
+TOTAL                                                     284     27    90%
+
+======================== 14 passed in 0.75 seconds ========================
+```
+
+To generate a coverage report with [nose][], you can use the [nose cover plugin][]:
+
+[pytest]: http://pytest.org
+[nose]: https://nose.readthedocs.org
+[pytest-cov]: https://pypi.python.org/pypi/pytest-cov
+[nose cover plugin]: https://nose.readthedocs.org/en/latest/plugins/cover.html
+
+```console
+$ nosetests --with-coverage --cover-erase --cover-package=codeclimate_test_reporter
+TOTAL                                                284     27    90%
+----------------------------------------------------------------------
+Ran 14 tests in 0.743s
+
+OK
+```
+
+By default, coverage.py will create the test coverage report at `./.coverage`.
+If you configure coverage.py to generate a coverage report at an alternate
+location, pass that to the `codeclimate-test-reporter`:
+
+```console
+$ codeclimate-test-reporter --file ./alternate/location/.coverage
+Submitting payload to https://codeclimate.com... done!
+```
 
 ## Installation
 
