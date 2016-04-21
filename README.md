@@ -1,9 +1,16 @@
 # codeclimate-test-reporter
 
 [![Code Climate][cc-badge]][cc-repo]
+[![Test Coverage][cc-coverage-badge]][cc-coverage]
+[![PyPI version][pypy-badge]][pypy]
 
 [cc-badge]: https://codeclimate.com/github/codeclimate/python-test-reporter/badges/gpa.svg
-[cc-repo]: https://codeclimate.com/github/codeclimate/ruby-test-reporter
+[cc-coverage-badge]: https://codeclimate.com/github/codeclimate/python-test-reporter/badges/coverage.svg
+[cc-repo]: https://codeclimate.com/github/codeclimate/python-test-reporter
+[cc-coverage]: https://codeclimate.com/github/codeclimate/python-test-reporter/coverage
+[pypy-badge]: https://badge.fury.io/py/codeclimate-test-reporter.svg
+[pypy]: https://pypi.python.org/pypi/codeclimate-test-reporter
+
 
 Collects test coverage data from your Python test suite and sends it to Code
 Climate's hosted, automated code review service.
