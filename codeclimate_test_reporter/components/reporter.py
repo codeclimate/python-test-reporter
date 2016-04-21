@@ -70,9 +70,3 @@ class Reporter:
         cov.xml_report(outfile=xml_filepath)
 
         return xml_filepath
-
-    def __exit_code_for_status_code(self, status_code):
-        if status_code == 200:
-            return 0
-        elif status_code == 500:
-            return 1
