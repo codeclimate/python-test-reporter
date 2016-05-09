@@ -8,6 +8,7 @@ if sys.version_info < (3,0):
 
 class FileCoverage:
     def __init__(self, file_node):
+        self.file_body = None
         self.file_node = file_node
         self.__process()
 
@@ -40,10 +41,16 @@ class FileCoverage:
         return self.file_node.findall("lines/line")
 
     def __blob(self):
-        contents = open(self.__filename(), "r", encoding="utf-8-sig").read()
+        contents = self.__file_body()
         header = "blob " + str(len(contents)) + "\0"
 
         return sha1((header + contents).encode("utf-8")).hexdigest()
+
+    def __file_body(self):
+        if not self.file_body:
+            self.file_body = open(self.__filename(), "r", encoding="utf-8-sig").read()
+
+        return self.file_body
 
     def __filename(self):
         return self.file_node.get("filename")
@@ -55,7 +62,7 @@ class FileCoverage:
         return self.__guard_division(self.hits, self.covered)
 
     def __num_lines(self):
-        return sum(1 for line in open(self.__filename()))
+        return len(self.__file_body().splitlines())
 
     def __covered_percent(self):
         return self.__guard_division(self.covered, self.total)
