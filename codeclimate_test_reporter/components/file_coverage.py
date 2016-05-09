@@ -1,5 +1,9 @@
 import json
+import sys
 from hashlib import sha1
+
+if sys.version_info < (3,0):
+    from io import open
 
 
 class FileCoverage:
@@ -36,7 +40,7 @@ class FileCoverage:
         return self.file_node.findall("lines/line")
 
     def __blob(self):
-        contents = open(self.__filename(), "r").read()
+        contents = open(self.__filename(), "r", encoding="utf-8-sig").read()
         header = "blob " + str(len(contents)) + "\0"
 
         return sha1((header + contents).encode("utf-8")).hexdigest()
