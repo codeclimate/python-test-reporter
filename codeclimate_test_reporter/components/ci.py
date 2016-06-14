@@ -85,7 +85,7 @@ class CI:
                 "build_identifier": self.env.get("CI_BUILD_NUMBER"),
                 "build_url": self.env.get("CI_BUILD_URL"),
                 "branch": self.env.get("CI_BRANCH"),
-                "commit_sha": self.env.get("CI_BUILD_NUMBER"),
+                "commit_sha": self.env.get("CI_COMMIT"),
                 "pull_request": self.env.get("CI_PULL_REQUEST")
             }
         }, {
