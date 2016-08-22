@@ -62,7 +62,7 @@ To generate a coverage report with [pytest][], you can use the [pytest-cov][]
 plugin:
 
 ```console
-$ py.test --cov=codeclimate_test_reporter tests/
+$ py.test --cov=your_package tests/
 TOTAL                                                     284     27    90%
 
 ======================== 14 passed in 0.75 seconds ========================
@@ -76,7 +76,7 @@ To generate a coverage report with [nose][], you can use the [nose cover plugin]
 [nose cover plugin]: https://nose.readthedocs.org/en/latest/plugins/cover.html
 
 ```console
-$ nosetests --with-coverage --cover-erase --cover-package=codeclimate_test_reporter
+$ nosetests --with-coverage --cover-erase --cover-package=your_package
 TOTAL                                                284     27    90%
 ----------------------------------------------------------------------
 Ran 14 tests in 0.743s
