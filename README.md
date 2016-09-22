@@ -121,9 +121,6 @@ Across the many different testing frameworks, setups, and environments, there
 are lots of variables at play. Before setting up test coverage, it's important
 to understand what we do and do not currently support:
 
-* **Default branch only:** We only support test coverage for your default
-  branch. Be sure to check out this branch before running your tests.
-
 * **Single payload:** We currently only support a single test coverage payload
   per commit. If you run your tests in multiple steps, or via parallel tests,
   Code Climate will only process the first payload that we receive. If you are
