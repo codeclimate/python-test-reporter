@@ -32,7 +32,7 @@ class Reporter:
             raise CoverageFileNotFound(message)
 
         xml_filepath = self.__create_xml_report(self.args.file)
-        formatter = Formatter(xml_filepath)
+        formatter = Formatter(xml_filepath, self.args.debug)
         payload = formatter.payload()
 
         PayloadValidator(payload).validate()

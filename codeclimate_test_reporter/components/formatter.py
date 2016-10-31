@@ -7,7 +7,8 @@ from .git_command import GitCommand
 
 
 class Formatter:
-    def __init__(self, xml_report_path):
+    def __init__(self, xml_report_path, debug=False):
+        self.debug = debug
         tree = ET.parse(xml_report_path)
         self.root = tree.getroot()
 
@@ -50,6 +51,9 @@ class Formatter:
         source_files = []
 
         for file_node in self.__file_nodes():
+            if self.debug:
+                print("Processing file path=%s" % file_node.get("filename"))
+
             file_coverage = FileCoverage(file_node)
             payload = file_coverage.payload()
             source_files.append(payload)

@@ -34,4 +34,4 @@ release: image
 	  $(IMAGE_NAME) -c 'bin/release' && bin/post-release
 
 run: image
-	docker run --rm $(IMAGE_NAME) --debug
+	docker run --rm $(IMAGE_NAME) --version

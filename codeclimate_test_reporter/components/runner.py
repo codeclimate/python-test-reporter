@@ -37,17 +37,17 @@ class Runner:
 
         """
 
+        if self.parsed_args.version:
+            self.out.write(reporter_version)
+            return 0
+
+        if self.parsed_args.debug:
+            self.out.write(self.__debug_info())
+
         try:
-            if self.parsed_args.debug:
-                self.out.write(self.__debug_info())
-                return 0
-            elif self.parsed_args.version:
-                self.out.write(reporter_version)
-                return 0
-            else:
-                reporter = Reporter(self.parsed_args)
-                exit_status = reporter.run()
-                return exit_status
+            reporter = Reporter(self.parsed_args)
+            exit_status = reporter.run()
+            return exit_status
         except CoverageFileNotFound as e:
             return self.__handle_error(
                 str(e) + "\nUse --file <file> to specifiy an alternate location."

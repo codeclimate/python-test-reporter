@@ -23,15 +23,6 @@ def test_version():
     assert(return_code == 0)
     assert(out.getvalue().strip() == reporter_version)
 
-def test_debug():
-    out = StringIO()
-    runner = Runner(["--debug"], out=out)
-
-    return_code = runner.run()
-
-    assert(return_code == 0)
-    assert(reporter_version in out.getvalue().strip())
-
 def test_run():
     os.environ["CODECLIMATE_API_HOST"] = "http://example.com"
 
