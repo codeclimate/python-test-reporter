@@ -1,3 +1,7 @@
+machine:
+  environment:
+    CODECLIMATE_REPO_TOKEN: 783d26fa43e7bee1cc8791677e808941795bc20f6d530e92905e2d8577a2de06
+
 dependencies:
   override:
     - pip install tox tox-pyenv
