@@ -6,6 +6,18 @@ if sys.version_info < (3, 0):
     from io import open
 
 
+def read_file_content(path):
+    """
+    Read a file content, either if it is utf-8 or latin-1 encoding
+    :param path: path to the file
+    :return: file content
+    """
+    try:
+        return open(path, "r", encoding="utf-8-sig").read()
+    except UnicodeDecodeError:
+        return open(path, "r", encoding="iso-8859-1").read()
+
+
 class FileCoverage:
     def __init__(self, file_node):
         self.file_body = None
@@ -48,7 +60,7 @@ class FileCoverage:
 
     def __file_body(self):
         if not self.file_body:
-            self.file_body = open(self.__filename(), "r", encoding="utf-8-sig").read()
+            self.file_body = read_file_content(self.__filename())
 
         return self.file_body
 
