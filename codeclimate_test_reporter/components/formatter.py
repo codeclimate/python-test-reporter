@@ -6,6 +6,10 @@ from .file_coverage import FileCoverage
 from .git_command import GitCommand
 
 
+class InvalidReportVersion(Exception):
+    pass
+
+
 class Formatter:
     def __init__(self, xml_report_path, debug=False):
         self.debug = debug
@@ -13,6 +17,8 @@ class Formatter:
         self.root = tree.getroot()
 
     def payload(self):
+        self.__validate_report_version()
+
         total_line_counts = {"covered": 0, "missed": 0, "total": 0}
         total_covered_strength = 0.0
         total_covered_percent = 0.0
@@ -43,6 +49,21 @@ class Formatter:
             "ci_service": self.__ci_data(),
             "source_files": source_files
         }
+
+    def __validate_report_version(self):
+        report_version = self.root.get("version")
+
+        if report_version < "4.0" or report_version >= "4.4":
+            message = """
+            This reporter is compatible with Coverage.py versions >=4.0,<4.4.
+            Your Coverage.py report version is %s.
+
+            Consider locking your version of Coverage.py to >4,0,<4.4 until the
+            following Coverage.py issue is addressed:
+            https://bitbucket.org/ned/coveragepy/issues/578/incomplete-file-path-in-xml-report
+            """ % (report_version)
+
+            raise InvalidReportVersion(message)
 
     def __ci_data(self):
         return CI().data()

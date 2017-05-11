@@ -16,6 +16,7 @@ import requests.exceptions
 
 from ..__init__ import __version__ as reporter_version
 from ..components.argument_parser import ArgumentParser
+from ..components.formatter import InvalidReportVersion
 from ..components.payload_validator import InvalidPayload
 from ..components.reporter import CoverageFileNotFound, Reporter
 
@@ -56,6 +57,8 @@ class Runner:
             return self.__handle_error(str(e), support=True)
         except InvalidPayload as e:
             return self.__handle_error("Invalid Payload: " + str(e), support=True)
+        except InvalidReportVersion as e:
+            return self.__handle_error(str(e))
         except requests.exceptions.HTTPError as e:
             return self.__handle_error(str(e), support=True)
         except requests.exceptions.Timeout:
