@@ -10,20 +10,42 @@ from codeclimate_test_reporter.components.payload_validator import PayloadValida
 
 
 class FormatterTest(unittest.TestCase):
+    def test_payload_latin_1(self):
+        orig_dir = os.getcwd()
+        os.chdir("./tests/fixtures")
+
+        self.__setup_git()
+
+        try:
+            formatter = Formatter("coverage_for_latin_1_source.xml")
+            payload = formatter.payload()
+        finally:
+            os.chdir(orig_dir)
+            shutil.rmtree("./tests/fixtures/.git")
+
+        source_file = payload["source_files"][0]
+        expected_line_counts = {"covered": 9, "missed": 1, "total": 10}
+        expected_coverage = "[null, null, null, null, 1, 1, 1, 1, null, 1, 1, null, 1, 0, null, 1, 1]"
+
+        assert type(payload) is dict
+        assert len(payload["source_files"]) == 1
+
+        assert source_file["line_counts"] == expected_line_counts
+        assert source_file["covered_percent"] == 0.9
+        assert source_file["covered_strength"] == 1.0
+        assert source_file["coverage"] == expected_coverage
+
+        assert PayloadValidator(payload).validate()
+
     def test_payload(self):
         orig_dir = os.getcwd()
         os.chdir("./tests/fixtures")
 
-        subprocess.call(["git", "init"])
-        subprocess.call(["git", "config", "user.name", "Test User"])
-        subprocess.call(["git", "config", "user.email", "test@example.com"])
-        subprocess.call(["git", "commit", "--allow-empty", "--message", "init"])
+        self.__setup_git()
 
         try:
             formatter = Formatter("coverage.xml")
             payload = formatter.payload()
-            formatter_latin_1 = Formatter("coverage_for_latin_1_source.xml")
-            payload_latin_1 = formatter_latin_1.payload()
         finally:
             os.chdir(orig_dir)
             shutil.rmtree("./tests/fixtures/.git")
@@ -42,17 +64,6 @@ class FormatterTest(unittest.TestCase):
 
         assert PayloadValidator(payload).validate()
 
-        # Assertions for the latin 1 file
-        assert type(payload_latin_1) is dict
-        assert len(payload_latin_1["source_files"]) == 1
-
-        assert source_file["line_counts"] == expected_line_counts
-        assert source_file["covered_percent"] == 0.9
-        assert source_file["covered_strength"] == 1.0
-        assert source_file["coverage"] == expected_coverage
-
-        assert PayloadValidator(payload_latin_1).validate()
-
     def test_payload_incompatible_version(self):
         orig_dir = os.getcwd()
         os.chdir("./tests/fixtures")
@@ -62,3 +73,9 @@ class FormatterTest(unittest.TestCase):
             self.assertRaises(InvalidReportVersion, formatter.payload)
         finally:
             os.chdir(orig_dir)
+
+    def __setup_git(self):
+        subprocess.call(["git", "init"])
+        subprocess.call(["git", "config", "user.name", "Test User"])
+        subprocess.call(["git", "config", "user.email", "test@example.com"])
+        subprocess.call(["git", "commit", "--allow-empty", "--message", "init"])
