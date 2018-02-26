@@ -21,6 +21,9 @@ engines:
     - 1b18d0fde7d0511be196bcc366180bf8
     # complexity in Runner#run
     - c1a982077efa39ca50db944490e15485
+  isort:
+    enabled: true
+    channel: beta
 ratings:
   paths:
   - "**.inc"
